@@ -57,30 +57,11 @@ def extract_features(config):
     save_path = f'data/{config.dataset}/feature_map_ResNet_101_{config.dataset}_junzhi.hdf5'
     attribute_path = f'w2v/{config.dataset}_attribute_junzhi.pkl'        #是一个词向量的矩阵 形状是312，300
 
-    # # region feature extractor
-    # resnet18 = models.resnet18(pretrained=True).to(config.device)
-    # resnet101 = nn.Sequential(*list(resnet18.children())[:-2]).eval()
 
-    # Dataset = CustomedDataset(config.dataset, img_dir, file_paths)
-    # dataset_loader = torch.utils.data.DataLoader(Dataset,
-    #                                              batch_size=config.batch_size,
-    #                                              shuffle=False,
-    #                                              num_workers=config.nun_workers)
-
-    # with torch.no_grad():
-
-    #     all_features = []
-    #     for _, imgs in enumerate(dataset_loader):
-    #         imgs = imgs.to(config.device)
-    #         features = resnet101(imgs)
-    #         all_features.append(features.cpu().numpy())
-    # Dataset = imu_data
     all_features = np.load("/data1/hw/GFT/HAR_Pre/Pamap2/33Hz/features.npy")  # self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
     # (19867, 2048)
 
-    # get remaining metadata
-    # matcontent = Dataset.matcontent
-    # labels = matcontent['labels'].astype(int).squeeze() - 1
+
     labels = np.load(imu_labels_path)
 
 

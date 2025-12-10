@@ -84,7 +84,6 @@ class TransZero(nn.Module):
             Fs = self.MCAM(Fs_imu, Fs_spectrogram)
         else:
             Fs = input
-            print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
         # transformer-based visual-to-semantic embedding
         Fs = Fs.unsqueeze(3)  # torch.Size([22, 512, 1, 1])
@@ -200,8 +199,7 @@ class TransZero(nn.Module):
         loss_reg = self.compute_reg_loss(in_package)
 
         loss = loss_CE  + 0.005 * loss_reg + 0.3 * loss_cal
-        # loss = loss_CE  + 0.05 * loss_reg + 0.3 * loss_cal
-        # loss = 0.05 * loss_reg + 0.3 * loss_cal
+
         out_package = {'loss': loss, 'loss_CE': loss_CE,
                        'loss_cal': loss_cal, 'loss_reg': loss_reg}
         return out_package
