@@ -9,18 +9,10 @@ import torch.nn.functional as F
 
 
 def random_permute_axes(data):
-    """
-    对数据的每个 (x, y, z) 组进行随机转换。
-    参数:
-    返回:
-        data (torch.Tensor): 形状为 (batch_size, 170, 27)
-        permuted_data (torch.Tensor): 转换后的数据
-        perm (list): 变换的顺序
-    """
 
     assert data.shape[2] % 9 == 0,
 
-    # 随机生成一个 (x, y, z) 的排列，但不能是原来的顺序
+    # 随机生成一个 (x, y, z) 的排列
     axes = [0, 1, 2]
     perm = axes.copy()
     while perm == axes:
@@ -39,14 +31,6 @@ def random_permute_axes(data):
 
 
 def random_permute_axes_mhealth(data):
-    """
-    对 mHealth 数据中的传感器 (x, y, z) 组进行随机转换。
-    参数:
-        data (torch.Tensor): 形状为 (batch_size, 60, 21)
-    返回:
-        permuted_data (torch.Tensor): 转换后的数据
-        perms (list): 每个传感器的变换顺序
-    """
 
     assert data.shape[2] == 21, "数据的最后一个维度必须是21。"
 
@@ -81,18 +65,7 @@ def random_permute_axes_mhealth(data):
 
 
 def compute_similarity_loss(original_features, permuted_features):
-    """
-    计算原始数据和转换后数据的特征相似性损失。
-    参数:
-        original_features (torch.Tensor): 原始数据的特征
-        permuted_features (torch.Tensor): 转换后数据的特征
 
-
-
-
-    返回:
-        loss (torch.Tensor): 特征相似性损失
-    """
     return F.mse_loss(original_features, permuted_features)
 
 
@@ -152,8 +125,6 @@ for i in range(0, niters):
     total_loss.backward()
     # loss.backward()
     optimizer.step()
-
-
 
 
     # report result
